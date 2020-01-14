@@ -1,0 +1,25 @@
+<table class="table">
+    <tr>
+        <th scope="col">Address</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Amount</th>
+    </tr>
+    <tr *ngFor="let history of _ordersArray">
+        <td>
+            {{history.address}}
+        </td>
+        <td>
+            {{history.firstName}}
+        </td>
+        <td>
+            {{history.lastName}}
+        </td>
+        <td>
+            {{history.amount}}
+        </td>
+        <td>
+            <input type="submit" value="delete" class="btn btn-light" (click)="deleteOrder(history._id)">
+        </td>
+    </tr>
+</table>

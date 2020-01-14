@@ -1,0 +1,72 @@
+<hr>
+<form #myForm="ngForm">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">First Name: </label> <input type="text" [(ngModel)]="_firstName" name="firstName" required pattern="[a-zA-Z' -]*" minlength="3" #firstName="ngModel"/>
+        <div [hidden]="firstName.valid || firstName.pristine"></div>
+        <p class="blockquote-footer" *ngIf="firstName?.errors?.required"> This field is required.</p>
+        <p class="blockquote-footer" *ngIf="firstName?.errors?.pattern"> Only alphabetical characters, hyphens and apostrophes are allowed.</p>
+        <p class="blockquote-footer" *ngIf="firstName?.errors?.minlength"> This entry must have at least three characters.</p> 
+    </div> 
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Last Name: </label> <input type="text" [(ngModel)]="_lastName" name="lastName" required pattern="[a-zA-Z' -]*" minlength="3" #lastName="ngModel"/>
+        <div [hidden]="lastName.valid || lastName.pristine"></div>   
+        <p class="blockquote-footer" *ngIf="lastName?.errors?.required"> This field is required.</p>
+        <p class="blockquote-footer" *ngIf="lastName?.errors?.pattern"> Only alphabetical characters, hyphens and apostrophes are allowed.</p>
+        <p class="blockquote-footer" *ngIf="lastName?.errors?.minlength"> This entry must have at least three characters.</p> 
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Street Address: </label> <input type="text" [(ngModel)]="_address" name="address"  #address="ngModel"/>
+    </div>
+    <input type="submit" value="Submit Address" class="btn btn-light" 
+    [disabled]="!myForm.form.valid" (click)="submitAddress()"> 
+</form>
+{{_errorMessage1}}
+<hr>
+
+<form>
+    <div class="form-group row">
+        <label class="col-auto col-form-label">Product: </label>
+        <select [(ngModel)]="_id" name="option" >
+            <option *ngFor="let product of _productsArray" value={{product._id}}>{{product._id}} {{product.productName}}</option>
+        </select>
+        <label class="col-auto col-form-label">Qty:</label> <input type="number" name="qty" [(ngModel)]="_qty"> 
+        <div class="col-auto my-1">
+            <input type="submit" value="Add Item" class="btn btn-light" (click)="addItem()">
+        </div>
+    </div>
+</form>
+{{_errorMessage2}}
+
+<hr>
+<!--a new array used to store unsaved form should be created here-->
+<table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Qty</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let item of _itemArray">
+            <td>
+                {{item._name}}
+            </td>
+            <td>
+                {{item._qty}}
+            </td>
+            <td>
+                {{item._price}}
+            </td>
+            <td>
+                {{item._amount}}
+            </td>
+            <td>
+                <input type="submit" value="delete" class="btn btn-light" (click)="deleteItem(item)">
+            </td>
+        </tr>
+        <tr><td>Taxes 7%</td><td></td><td></td><td>${{displaytax}}</td></tr>
+        <tr><td>Final Total</td><td></td><td></td><td>${{displaytotal}}</td></tr>
+    </table>
+<p>{{_msg}}</p>
+<input type="submit" value="SUBMIT ORDER" class="btn btn-light" (click)="createOrder()">
